@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trading Assistent 2.0</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts für ein ansprechenderes Schriftbild -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome für Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Chart.js für Diagramme -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Manifest für PWA -->
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <nav>
+        <h1><i class="fas fa-chart-line"></i> Dein persönlicher Trading-Assistent</h1>
+        <div class="nav-buttons">
+          <button type="button" id="logout-button" style="display: none;"><i class="fas fa-sign-out-alt"></i> Abmelden</button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Benutzer-Login -->
+    <section id="login">
+      <h2><i class="fas fa-user"></i> Benutzer-Login</h2>
+      <form id="login-form">
+        <label for="username">Benutzername:</label>
+        <input type="text" id="username" name="username" required><br>
+        <button type="button" id="login-button"><i class="fas fa-sign-in-alt"></i> Einloggen</button>
+      </form>
+    </section>
+
+    <!-- Hauptinhalt -->
+    <section id="main-content" style="display: none;">
+      <section id="rules">
+        <h2><i class="fas fa-book"></i> Deine Trading-Regeln</h2>
+        <ul>
+          <!-- Regeln werden dynamisch geladen und gerendert -->
+        </ul>
+      </section>
+
+      <section id="checklist">
+        <h2><i class="fas fa-check-circle"></i> Trading-Checkliste</h2>
+        <form id="checklist-form">
+          <!-- Checklisten-Items werden dynamisch geladen und gerendert -->
+          <button type="button" id="check-button"><i class="fas fa-search"></i> Checkliste prüfen</button>
+        </form>
+        <p id="checklist-result"></p>
+      </section>
+
+      <section id="journal">
+        <h2><i class="fas fa-book-open"></i> Trading-Journal</h2>
+        <form id="journal-form">
+          <textarea id="trade-notes" placeholder="Beschreibe deinen Trade..."></textarea><br>
+          <button type="button" id="save-button"><i class="fas fa-save"></i> Trade speichern</button>
+        </form>
+        <div id="journal-entries">
+          <h3>Deine Trades:</h3>
+          <ul id="entries-list"></ul>
+        </div>
+      </section>
+
+      <section id="manual-trade">
+        <h2><i class="fas fa-pencil-alt"></i> Manueller Trade</h2>
+        <form id="manual-trade-form">
+          <label for="symbol">Symbol:</label>
+          <input type="text" id="symbol" name="symbol" required><br>
+
+          <label for="type">Typ:</label>
+          <select id="type" name="type" required>
+            <option value="buy">Kauf</option>
+            <option value="sell">Verkauf</option>
+          </select><br>
+
+          <label for="lot">Lot:</label>
+          <input type="number" id="lot" name="lot" step="0.01" required><br>
+
+          <label for="openprice">Einstiegspreis:</label>
+          <input type="number" id="openprice" name="openprice" step="0.0001" required><br>
+
+          <label for="closeprice">Ausstiegspreis:</label>
+          <input type="number" id="closeprice" name="closeprice" step="0.0001"><br>
+
+          <label for="profit">Profit/Verlust:</label>
+          <input type="number" id="profit" name="profit" step="0.01"><br>
+
+          <label for="comment">Kommentar:</label>
+          <textarea id="comment" name="comment" placeholder="Zusätzliche Informationen..."></textarea><br>
+
+          <button type="button" id="manual-save-button"><i class="fas fa-save"></i> Trade speichern</button>
+        </form>
+      </section>
+
+      <section id="statistics">
+        <h2><i class="fas fa-chart-pie"></i> Leistungsstatistiken</h2>
+        <canvas id="tradeChart"></canvas>
+        <canvas id="logChart"></canvas>
+        <p id="profit-loss-ratio">Gewinn/Verlust-Verhältnis: 0</p>
+      </section>
+
+      <!-- Einstellungsrad -->
+      <div class="settings-wheel">
+        <i class="fas fa-cog"></i>
+        <div class="settings-menu">
+          <h3>Einstellungen</h3>
+          <form id="settings-form">
+            <label>
+              <input type="checkbox" id="risk-management"> 2% Risiko pro Tag
+            </label><br>
+            <label for="max-risk">
+              Max. Risiko (in %):
+            </label>
+            <input type="number" id="max-risk" name="max-risk" min="0" max="100" step="0.1" value="2" disabled><br>
+            
+            <label for="starting-capital">
+              Startkapital:
+            </label>
+            <input type="number" id="starting-capital" name="starting-capital" min="0" step="0.01" value="1000"><br>
+            
+            <label for="max-trades-per-day">
+              Max. Trades pro Tag:
+            </label>
+            <input type="number" id="max-trades-per-day" name="max-trades-per-day" min="1" max="10" step="1" value="2"><br>
+            
+            <!-- Buttons zum Hinzufügen von Regeln und Checklisten-Items -->
+            <button type="button" id="add-rule-button"><i class="fas fa-plus"></i> Regel hinzufügen</button><br>
+            <button type="button" id="add-checklist-item-button"><i class="fas fa-plus"></i> Checklisten-Item hinzufügen</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
